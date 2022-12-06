@@ -3,6 +3,7 @@
 #include <string.h>
 #include <math.h>
 #include "./src/lerArquivo.h"
+#include "./src/KMP.h"
 #define MAXLENGTH 10000
 int menu(int opcao)
 {
@@ -16,7 +17,7 @@ int menu(int opcao)
 
 int main(int argc, char **argv)
 {
-    char *arrayHuman[MAXLENGTH], *arrayChimpanzee[MAXLENGTH], *arrayDog[MAXLENGTH]; 
+    char *arrayHuman[MAXLENGTH], *arrayChimpanzee[MAXLENGTH], *arrayDog[MAXLENGTH];
     int opcao = -1;
     while(opcao != 0)
     {
@@ -31,9 +32,7 @@ int main(int argc, char **argv)
             lerArquivoPrincipal("human.txt", arrayHuman);
             lerArquivoPrincipal("dog.txt", arrayDog);
             lerArquivoPrincipal("chimpanzee.txt", arrayChimpanzee);
-            printf("%s", arrayHuman[30]);
-            printf("%s", arrayDog[30]);
-            printf("%s", arrayChimpanzee[30]);
+
         default:
             break;
         }
