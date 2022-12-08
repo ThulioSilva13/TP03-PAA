@@ -34,7 +34,7 @@ int main(int argc, char **argv)
         case 1:
             //lerArquivoPrincipal("human.txt", arrayHuman);
             lerArquivoPrincipal("dog.txt", arrayDog);
-            permutacao(3);
+            permutacao(2);
             //lerArquivoPrincipal("chimpanzee.txt", arrayChimpanzee);
             //BuscaKMP("AA", *arrayDog);
             // for(int i = 0; i < strlen(*arrayDog); i++)

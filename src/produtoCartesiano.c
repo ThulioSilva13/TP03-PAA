@@ -4,58 +4,61 @@
 
 void permutacao(int tamanho)
 {
-	int *num ;
-    /* padrao é a string de entrada, e str
-     * receberá cada permutação.
-     */ 
-    char padrao[] = {"ACTG"};
-    char str[MAXLENGTH]; 
-    char resultadoProduto[(int)(pow(tamanho,4))+1];
-    int n, i, j, k;
+	int *qtd_caracteres;
+    int tam = (int)(pow(4,tamanho));
+
+    char base[] = {"ACTG"};
+    char combinacoes[tamanho]; 
+    char** resultadoProduto;
+    resultadoProduto = (char**) malloc (sizeof(char*) * tam);
+    for (int h=0; h<tam;h++){
+        resultadoProduto[h] = " ";
+    }
+
+    int i, j, posicao;
     int count = 0;
 
-    n = strlen(padrao);
-    /* Cria o nosso número. Ele é um vetor de
-     * r+1 posições, sendo que a última é 
-     * reservada para indicar quando todos os
-     * números de tamanho r foram gerados. */
-    num = (int *) calloc( (tamanho+1), sizeof(int)) ;
+    int tam_base = strlen(base);
 
-    /* Termina quando a última posição do vetor
-     * for 1. */
-    while ( num[tamanho] == 0 ) {
-        for ( i = 0; i < n; i++ ) {
-            printf("\n%d",count);
-            /* processo de mapeamento. */
-            for ( j = 0, k = tamanho-1; j < tamanho; j++ ) {
-                str[k] = padrao[num[j]] ;
-                k-- ;
+    qtd_caracteres = (int *) calloc( (tamanho+1), sizeof(int)) ;
+
+    //para cada caractere da base 
+    while ( qtd_caracteres[tamanho] == 0 ) {
+        
+        for ( i = 0; i < tam_base; i++ ) {
+
+            /* mapeamento */
+            for ( j = 0, posicao = tamanho-1; j < tamanho; j++ ) {
+                combinacoes[posicao] = base[qtd_caracteres[j]] ;
+                printf("\ni=%d ,j=%d, %c", i,j, combinacoes[posicao] );
+                posicao-- ;
             }
             /* Mostra o resultado. */
+            combinacoes[tamanho] = 0 ;
             
-            str[tamanho] = 0 ;
-            //printf("%s\n", str);
-            strcpy(resultadoProduto,str);
+            resultadoProduto[count] = combinacoes;
+            //printf("count: %d",count);
+            //printf("%s\n", combinacoes) ;
+            printf("\n%s\n", resultadoProduto[count]);
             count ++;
-
             /* incrementa o algarismo menos significativo. */
-            num[0]++ ;
+            qtd_caracteres[0]++ ;
         }
-
-        /* Muda de "casa" e lança os vai uns. */ 
+        
+        printf("teste: %s\n", resultadoProduto[0]);
+        
+        //vai pro proximo caractere
         for ( i = 0; i < tamanho; i++ ) {
-            if ( num[i] == n ) {
-                 num[i] = 0 ;
-                 num[i+1]++ ;
+            if ( qtd_caracteres[i] == tam_base ) {
+                 qtd_caracteres[i] = 0 ;
+                 qtd_caracteres[i+1]++ ;
             }
         }
     }
 
-    printf("tam= %d",(int)(pow(tamanho,4))+1);
-
-    for (int h = 0; h<(int)(pow(tamanho,4))+1;h++){
-        printf("sequencia : %c\n",resultadoProduto[h]);
+    for (int h=0; h<tam;h++){
+        //printf("h:%d\n", h);
+        printf("%s ",resultadoProduto[h]);
     }
     printf("\n");
 }
-
