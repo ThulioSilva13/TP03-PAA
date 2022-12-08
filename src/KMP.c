@@ -1,8 +1,9 @@
 #include "KMP.h"
 #define MAXLENGTH 10000
 
-void BuscaKMP(char *padrao, char *texto)
+int BuscaKMP(char *padrao, char *texto)
 {
+	int contadorRepeticoes;
 	int tamanhoPadrao = strlen(padrao);
 	int tamanhoTexto = strlen(texto);
 
@@ -21,7 +22,8 @@ void BuscaKMP(char *padrao, char *texto)
 		}
 		if(j == tamanhoPadrao)
 		{
-			printf("Padrão encontrado no índice %d\n",i - j);
+			contadorRepeticoes++;
+			//printf("Padrão encontrado no índice %d\n",i - j);
 			j = prefixoMaisLongo[j-1];
 		}
 		else if(padrao[j] != texto[i])
@@ -32,7 +34,9 @@ void BuscaKMP(char *padrao, char *texto)
 				i++;
 		}
 	}
+	//printf("\no padrão foi encontrado %d vezes", contadorRepeticoes);
 	free(prefixoMaisLongo);
+	return contadorRepeticoes; // return
 }
 void CalculaPrefixoMaisLongo(char *padrao, int tamanhoPadrao, int *prefixoMaisLongo)
 {

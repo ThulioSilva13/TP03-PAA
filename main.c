@@ -4,6 +4,7 @@
 #include <math.h>
 #include "./src/lerArquivo.h"
 #include "./src/KMP.h"
+#include "./src/produtoCartesiano.h"
 #define MAXLENGTH 10000
 int menu(int opcao)
 {
@@ -17,7 +18,9 @@ int menu(int opcao)
 
 int main(int argc, char **argv)
 {
-    char *arrayHuman[MAXLENGTH], *arrayChimpanzee[MAXLENGTH], *arrayDog[MAXLENGTH];
+    //char *arrayHuman[MAXLENGTH];
+    //char *arrayChimpanzee[MAXLENGTH];
+    char *arrayDog[MAXLENGTH];
     int opcao = -1;
     while(opcao != 0)
     {
@@ -29,9 +32,17 @@ int main(int argc, char **argv)
             break;
 
         case 1:
-            lerArquivoPrincipal("human.txt", arrayHuman);
+            //lerArquivoPrincipal("human.txt", arrayHuman);
             lerArquivoPrincipal("dog.txt", arrayDog);
-            lerArquivoPrincipal("chimpanzee.txt", arrayChimpanzee);
+            permutacao(3);
+            //lerArquivoPrincipal("chimpanzee.txt", arrayChimpanzee);
+            //BuscaKMP("AA", *arrayDog);
+            // for(int i = 0; i < strlen(*arrayDog); i++)
+            // {
+            //     repeticoes += BuscaKMP("TTTCCAAAA", arrayDog[i]);
+            // }
+          // printf("Repeticoes totais: %d", repeticoes);
+            
 
         default:
             break;

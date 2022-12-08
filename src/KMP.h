@@ -3,4 +3,4 @@
 #include <stdlib.h>
 
 void CalculaPrefixoMaisLongo(char *padrao, int tamanhoPadrao, int *prefixoMaisLongo);
-void BuscaKMP(char *padrao, char *texto);
+int BuscaKMP(char *padrao, char *texto);
