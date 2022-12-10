@@ -2,10 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <time.h>
+
 #include "./src/lerArquivo.h"
-#include "./src/KMP.h"
 #include "./src/produtoCartesiano.h"
-#include "./src/similaridade.h"
+#include "./src/simulacao.h"
+
 
 #define MAXLENGTH 10000
 int menu(int opcao)
@@ -23,6 +25,11 @@ int main(int argc, char **argv)
     char *arrayHuman[MAXLENGTH];
     char *arrayChimpanzee[MAXLENGTH];
     char *arrayDog[MAXLENGTH];
+
+    double tempo_HumanoCachorro = 0;
+    double tempo_HumanoChimpanze = 0;
+    double tempo_CachorroChimpanze = 0;
+    clock_t tempo_simulacao;
     
     int opcao = -1;
     while(opcao != 0)
@@ -46,6 +53,7 @@ int main(int argc, char **argv)
                 int tamanhoConjunto = 0;
                 int qtdRepeticoes =0;
 
+                printf("\n-----------------------------------------------------------------\n");
                 printf("Entre com o tamanho de cada elemento do conjunto: ") ;
                 scanf("%d", &tamanho);
                 printf("Entre com a quantidade de elementos do conjunto: ") ;
@@ -53,109 +61,42 @@ int main(int argc, char **argv)
                 printf("Entre com a quantidade de vezes que o processo será repetido: ") ;
                 scanf("%d", &qtdRepeticoes);
 
-                long long int *repeticoesCachorro =(long long int *)calloc(sizeof(long long int),tamanhoConjunto);
-                long long int *repeticoesHumano =(long long int*)calloc(sizeof(long long int ),tamanhoConjunto);
-                long long int  *repeticoesChimpanze =(long long int *)calloc(sizeof(long long int ),tamanhoConjunto);
-                
                 int total = (int)pow(4, tamanho);
-
-                for (int i=0; i<qtdRepeticoes; i++){ 
-
-                    char** produtoCartesiano = (char**)malloc(sizeof(char*)*total);
-                    for(int i = 0; i < total; i++) {
-                        produtoCartesiano[i] = (char*)malloc(tamanho + 1);
-                    }
-
-                    criaProdutoCartesiano(produtoCartesiano, tamanho);
-
-                    char** conjunto = (char**)malloc(sizeof(char*)*4);
-                    for(int i = 0; i < tamanhoConjunto; i++){
-                        conjunto[i] = (char*)malloc(2);
-                    }
-                    
-                    if (tamanho == 1 && tamanhoConjunto == total){
-                        for (int i = 0; i < tamanhoConjunto; i++)
-                        {
-                            conjunto[i] = produtoCartesiano[i];
-                        }
-                    }
-                    else {
-                        for (int i = 0; i < tamanhoConjunto; i++)
-                        {
-                            int aleatorio = rand() % (total-1);
-                            if(strcmp(produtoCartesiano[aleatorio], "0") != 0)
-                            {
-                                conjunto[i] = produtoCartesiano[aleatorio];
-                                produtoCartesiano[aleatorio] = "0";
-                            }
-                            else
-                            {
-                                i--;
-                            }
-                        }
-                    }
-                    printf("\n\nConjunto = ");
-                    for (int i = 0; i < tamanhoConjunto; i++)
-                    {
-                        printf("%s ", conjunto[i]);
-                    }
-                
-                    for(int i = 0; i < strlen(*arrayChimpanzee); i++)
-                    {
-                        for(int j = 0; j < tamanhoConjunto; j++)
-                        {
-                            repeticoesChimpanze[j] += BuscaKMP(conjunto[j], arrayChimpanzee[0]);
-                            
-                        }
-                    }
-
-                    for(int i = 0; i < strlen(*arrayDog); i++)
-                    {
-                        for(int j = 0; j < tamanhoConjunto; j++)
-                        {
-                            repeticoesCachorro[j] += BuscaKMP(conjunto[j], arrayDog[i]);
-                            
-                        }
-                    }
-
-                    for(int i = 0; i < strlen(*arrayHuman); i++)
-                    {
-                        for(int j = 0; j < tamanhoConjunto; j++)
-                        {
-                            repeticoesHumano[j] += BuscaKMP(conjunto[j], arrayHuman[0]);
-                            
-                        }
-                    }
-                    // printf("\nRepeticoes humano: ");
-                    // for(int h = 0; h < tamanhoConjunto; h++)
-                    // {
-                    //     printf("%lld ", repeticoesHumano[h]);
-                    // }
-                    // printf("\nRepeticoes chimpanze: ");
-                    // for(int h = 0; h < tamanhoConjunto; h++)
-                    // {
-                    //     printf("%lld ", repeticoesChimpanze[h]);
-                    // }
-                    // printf("\nRepeticoes cachorro: "); 
-                    // for(int h = 0; h < tamanhoConjunto; h++)
-                    // {
-                    //     printf("%lld ", repeticoesCachorro[h]);
-                    // }
-                    
-                    double similaridadeHumanoCachorro = similaridade(repeticoesHumano, repeticoesCachorro, tamanhoConjunto);
-                    double similaridadeHumanoChimpanze = similaridade(repeticoesHumano, repeticoesChimpanze, tamanhoConjunto);
-                    double similaridadeCachorroChimpanze = similaridade(repeticoesCachorro, repeticoesChimpanze, tamanhoConjunto);
-
-                    printf("\nSimilaridade humano-cachorro = %lf",similaridadeHumanoCachorro);
-                    printf("\nSimilaridade humano-chimpaze = %lf",similaridadeHumanoChimpanze);
-                    printf("\nSimilaridade cachorro-chimpaze = %lf",similaridadeCachorroChimpanze);
-                
-                    free(produtoCartesiano);
-                    free(conjunto);
+                if (tamanhoConjunto > total){
+                    tamanhoConjunto = total;
                 }
+                
+                char** produtoCartesiano = (char**)malloc(sizeof(char*)*total);
+                for(int i = 0; i < total; i++) {
+                    produtoCartesiano[i] = (char*)malloc(tamanho + 1);
+                }
+                criaProdutoCartesiano(produtoCartesiano, tamanho);
+                
+                // -> calcular similaridade entre Humano e Cachorro
+                tempo_simulacao = clock(); //tempo inicial
+                double similaridadeHumanoCachorro = simulacao(produtoCartesiano,arrayHuman, arrayDog, tamanho, total, tamanhoConjunto, qtdRepeticoes);
+                tempo_simulacao = clock() - tempo_simulacao; //tempo final
+                tempo_HumanoCachorro = ((double)tempo_simulacao)/(CLOCKS_PER_SEC);
+
+                // -> calcular similaridade entre Humano e Chimpanze
+                tempo_simulacao = clock(); //tempo inicial
+                double similaridadeHumanoChimpanze = simulacao(produtoCartesiano,arrayHuman, arrayChimpanzee, tamanho, total, tamanhoConjunto, qtdRepeticoes);
+                tempo_simulacao = clock() - tempo_simulacao; //tempo final
+                tempo_HumanoChimpanze = ((double)tempo_simulacao)/(CLOCKS_PER_SEC);
+                
+                // -> calcular similaridade entre Cachorro e Chimpanze
+                tempo_simulacao = clock(); //tempo inicial
+                double similaridadeCachorroChimpanze = simulacao(produtoCartesiano,arrayChimpanzee, arrayDog, tamanho, total, tamanhoConjunto, qtdRepeticoes);
+                tempo_simulacao = clock() - tempo_simulacao; //tempo final
+                tempo_CachorroChimpanze = ((double)tempo_simulacao)/(CLOCKS_PER_SEC);
+
+                printf("\n- Similaridade humano-cachorro =   %lf | %lfs",similaridadeHumanoCachorro,tempo_HumanoCachorro);
+                printf("\n- Similaridade humano-chimpaze =   %lf | %lfs",similaridadeHumanoChimpanze, tempo_HumanoChimpanze);
+                printf("\n- Similaridade cachorro-chimpaze = %lf | %lfs",similaridadeCachorroChimpanze, tempo_CachorroChimpanze);
+                printf("\n-----------------------------------------------------------------\n");
 
                 int continuar = 0;
-                printf("\n\nDeseja escolher outras valores (1-SIM, 0-NAO): ");
+                printf("\nDeseja escolher outras valores (1-SIM, 0-NAO): ");
                 scanf("%d",&continuar);
                 if (continuar != 1){
                     break;
