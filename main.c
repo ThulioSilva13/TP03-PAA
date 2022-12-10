@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include <time.h>
 
 #include "./src/lerArquivo.h"
 #include "./src/produtoCartesiano.h"
@@ -25,11 +24,6 @@ int main(int argc, char **argv)
     char *arrayHuman[MAXLENGTH];
     char *arrayChimpanzee[MAXLENGTH];
     char *arrayDog[MAXLENGTH];
-
-    double tempo_HumanoCachorro = 0;
-    double tempo_HumanoChimpanze = 0;
-    double tempo_CachorroChimpanze = 0;
-    clock_t tempo_simulacao;
     
     int opcao = -1;
     while(opcao != 0)
@@ -71,28 +65,19 @@ int main(int argc, char **argv)
                     produtoCartesiano[i] = (char*)malloc(tamanho + 1);
                 }
                 criaProdutoCartesiano(produtoCartesiano, tamanho);
-                
-                // -> calcular similaridade entre Humano e Cachorro
-                tempo_simulacao = clock(); //tempo inicial
-                double similaridadeHumanoCachorro = simulacao(produtoCartesiano,arrayHuman, arrayDog, tamanho, total, tamanhoConjunto, qtdRepeticoes);
-                tempo_simulacao = clock() - tempo_simulacao; //tempo final
-                tempo_HumanoCachorro = ((double)tempo_simulacao)/(CLOCKS_PER_SEC);
 
-                // -> calcular similaridade entre Humano e Chimpanze
-                tempo_simulacao = clock(); //tempo inicial
+                printf("\n\n- Similaridades humano-chimpanze");
                 double similaridadeHumanoChimpanze = simulacao(produtoCartesiano,arrayHuman, arrayChimpanzee, tamanho, total, tamanhoConjunto, qtdRepeticoes);
-                tempo_simulacao = clock() - tempo_simulacao; //tempo final
-                tempo_HumanoChimpanze = ((double)tempo_simulacao)/(CLOCKS_PER_SEC);
-                
-                // -> calcular similaridade entre Cachorro e Chimpanze
-                tempo_simulacao = clock(); //tempo inicial
-                double similaridadeCachorroChimpanze = simulacao(produtoCartesiano,arrayChimpanzee, arrayDog, tamanho, total, tamanhoConjunto, qtdRepeticoes);
-                tempo_simulacao = clock() - tempo_simulacao; //tempo final
-                tempo_CachorroChimpanze = ((double)tempo_simulacao)/(CLOCKS_PER_SEC);
 
-                printf("\n- Similaridade humano-cachorro =   %lf | %lfs",similaridadeHumanoCachorro,tempo_HumanoCachorro);
-                printf("\n- Similaridade humano-chimpaze =   %lf | %lfs",similaridadeHumanoChimpanze, tempo_HumanoChimpanze);
-                printf("\n- Similaridade cachorro-chimpaze = %lf | %lfs",similaridadeCachorroChimpanze, tempo_CachorroChimpanze);
+                printf("\n\n- Similaridades humano-cachorro");
+                double similaridadeHumanoCachorro = simulacao(produtoCartesiano,arrayHuman, arrayDog, tamanho, total, tamanhoConjunto, qtdRepeticoes);
+                
+                printf("\n\n- Similaridades cachorro-chimpanze");
+                double similaridadeCachorroChimpanze = simulacao(produtoCartesiano,arrayChimpanzee, arrayDog, tamanho, total, tamanhoConjunto, qtdRepeticoes);
+
+                printf("\n\n- Similaridade humano-chimpaze =   %lf",similaridadeHumanoChimpanze);
+                printf("\n- Similaridade humano-cachorro =   %lf",similaridadeHumanoCachorro);
+                printf("\n- Similaridade cachorro-chimpaze = %lf",similaridadeCachorroChimpanze);
                 printf("\n-----------------------------------------------------------------\n");
 
                 int continuar = 0;

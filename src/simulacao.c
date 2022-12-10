@@ -45,10 +45,10 @@ double simulacao (char ** produtoCartesiano, char **arrayA, char **arrayB,int ta
             }
         }
         
-        // printf("\n    Conjunto = ");
-        // for (int i = 0; i < tamanhoConjunto; i++) {
-        //     printf("%s ", conjunto[i]);
-        // }
+        printf("\n\n    Conjunto = ");
+        for (int i = 0; i < tamanhoConjunto; i++) {
+            printf("%s ", conjunto[i]);
+        }
 
         for(int i = 0; i < strlen(*arrayA); i++) {
             for(int j = 0; j < tamanhoConjunto; j++) {
@@ -62,16 +62,16 @@ double simulacao (char ** produtoCartesiano, char **arrayA, char **arrayB,int ta
             }
         }
 
-        // printf("\nRepeticoes A: ");
-        // for(int h = 0; h < tamanhoConjunto; h++)
-        // {
-        //     printf("%lld ", repeticoesA[h]);
-        // }
-        // printf("\nRepeticoes B: ");
-        // for(int h = 0; h < tamanhoConjunto; h++)
-        // {
-        //     printf("%lld ", repeticoesB[h]);
-        // }
+        printf("\n    Repeticoes A: ");
+        for(int h = 0; h < tamanhoConjunto; h++)
+        {
+            printf("%lld ", repeticoesA[h]);
+        }
+        printf("\n    Repeticoes B: ");
+        for(int h = 0; h < tamanhoConjunto; h++)
+        {
+            printf("%lld ", repeticoesB[h]);
+        }
 
         similaridades[i] = similaridade(repeticoesA, repeticoesB, tamanhoConjunto);
 
@@ -79,9 +79,11 @@ double simulacao (char ** produtoCartesiano, char **arrayA, char **arrayB,int ta
         free(conjunto);
     }
 
+    printf("\n\n    Similiaridades: "); 
     double somaTotal = 0;
     for (int i=0; i<qtdRepeticoes; i++) { 
         somaTotal += similaridades[i];
+        printf("%lf ",similaridades[i]);
     }
 
     double mediaSimilaridadeAB = somaTotal/qtdRepeticoes;
