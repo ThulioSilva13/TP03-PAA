@@ -3,7 +3,7 @@
 
 int BuscaKMP(char *padrao, char *texto)
 {
-	int contadorRepeticoes;
+	int contadorRepeticoes = 0;
 	int tamanhoPadrao = strlen(padrao);
 	int tamanhoTexto = strlen(texto);
 
