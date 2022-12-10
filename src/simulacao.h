@@ -6,4 +6,4 @@
 #include "similaridade.h"
 
 
-double simulacao (char ** produtoCartesiano, char **arrayA, char **arrayB,int tamanho, int total, int tamanhoConjunto, int qtdRepeticoes);
+void simulacao (char ** produtoCartesiano, char **arrayHumano, char **arrayChimpanze, char **arrayCachorro, int tamanho, int total, int tamanhoConjunto, int qtdRepeticoes);

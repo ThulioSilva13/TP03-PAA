@@ -7,7 +7,6 @@
 #include "./src/produtoCartesiano.h"
 #include "./src/simulacao.h"
 
-
 #define MAXLENGTH 10000
 int menu(int opcao)
 {
@@ -66,18 +65,8 @@ int main(int argc, char **argv)
                 }
                 criaProdutoCartesiano(produtoCartesiano, tamanho);
 
-                printf("\n\n- Similaridades humano-chimpanze");
-                double similaridadeHumanoChimpanze = simulacao(produtoCartesiano,arrayHuman, arrayChimpanzee, tamanho, total, tamanhoConjunto, qtdRepeticoes);
+                simulacao(produtoCartesiano,arrayHuman, arrayChimpanzee, arrayDog, tamanho, total, tamanhoConjunto, qtdRepeticoes);
 
-                printf("\n\n- Similaridades humano-cachorro");
-                double similaridadeHumanoCachorro = simulacao(produtoCartesiano,arrayHuman, arrayDog, tamanho, total, tamanhoConjunto, qtdRepeticoes);
-                
-                printf("\n\n- Similaridades cachorro-chimpanze");
-                double similaridadeCachorroChimpanze = simulacao(produtoCartesiano,arrayChimpanzee, arrayDog, tamanho, total, tamanhoConjunto, qtdRepeticoes);
-
-                printf("\n\n- Similaridade humano-chimpaze =   %lf",similaridadeHumanoChimpanze);
-                printf("\n- Similaridade humano-cachorro =   %lf",similaridadeHumanoCachorro);
-                printf("\n- Similaridade cachorro-chimpaze = %lf",similaridadeCachorroChimpanze);
                 printf("\n-----------------------------------------------------------------\n");
 
                 int continuar = 0;
