@@ -34,7 +34,6 @@ int BuscaKMP(char *padrao, char *texto)
 				i++;
 		}
 	}
-	//printf("\no padrão foi encontrado %d vezes", contadorRepeticoes);
 	free(prefixoMaisLongo);
 	return contadorRepeticoes; // return
 }

@@ -6,6 +6,7 @@
 #include "./src/lerArquivo.h"
 #include "./src/produtoCartesiano.h"
 #include "./src/simulacao.h"
+#include "./src/BM.h"
 
 #define MAXLENGTH 10000
 int menu(int opcao)
@@ -35,7 +36,6 @@ int main(int argc, char **argv)
             break;
 
         case 1:
-
             lerArquivoPrincipal("human.txt", arrayHuman);
             lerArquivoPrincipal("dog.txt", arrayDog);
             lerArquivoPrincipal("chimpanzee.txt", arrayChimpanzee);
@@ -65,8 +65,9 @@ int main(int argc, char **argv)
                 }
                 criaProdutoCartesiano(produtoCartesiano, tamanho);
 
-                simulacao(produtoCartesiano,arrayHuman, arrayChimpanzee, arrayDog, tamanho, total, tamanhoConjunto, qtdRepeticoes);
-
+                simulacaoComKMP(produtoCartesiano,arrayHuman, arrayChimpanzee, arrayDog, tamanho, total, tamanhoConjunto, qtdRepeticoes);
+                //simulacaoComBM(produtoCartesiano,arrayHuman, arrayChimpanzee, arrayDog, tamanho, total, tamanhoConjunto, qtdRepeticoes);
+                
                 printf("\n-----------------------------------------------------------------\n");
 
                 int continuar = 0;
